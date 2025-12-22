@@ -20,6 +20,19 @@ def test_parse_int_missing():
         parse_int(None)
 
 
+def test_parse_int_invalid_string():
+    with pytest.raises(ValueError) as exc:
+        parse_int("abc")
+    assert str(exc.value) == "invalid"
+
+
+def test_parse_int_empty_and_float_string():
+    with pytest.raises(ValueError):
+        parse_int("")
+    with pytest.raises(ValueError):
+        parse_int("3.5")
+
+
 def test_multiply():
     assert multiply(4, 5) == 20
 
@@ -35,3 +48,8 @@ def test_divide_float_result():
 def test_divide_zero():
     with pytest.raises(ZeroDivisionError):
         divide(5, 0)
+
+
+def test_divide_negative_and_non_integral():
+    assert divide(-7, 2) == -3.5
+    assert divide(-6, 3) == -2
